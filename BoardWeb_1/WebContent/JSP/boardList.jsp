@@ -110,7 +110,8 @@ try {
 <title>게시판</title>
 </head>
 <body>
-	<div>게시판리스트</div>
+	<div>게시판리스트
+	<a href="/JSP/boardWrite.jsp"><button>글쓰기</button></a></div>
 	<table>
 		<tr> 
 			<th>No</th>
