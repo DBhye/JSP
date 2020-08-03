@@ -91,6 +91,7 @@ if(strI_board == null) {
 	<div>
 		<a href="/JSP/boardList.jsp">리스트로가기</a>
 		<a href="#" onclick="proDel(<%=i_board%>)">삭제</a>
+		<a href="/JSP/boardMod.jsp?i_board=<%=i_board%>">수정</a>
 	</div>
 	<table>
 		<tr>

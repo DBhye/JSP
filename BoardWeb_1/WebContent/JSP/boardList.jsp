@@ -29,7 +29,7 @@ Connection con = null; /*리턴 타입이 Connection 타입이다 Connection 객
 PreparedStatement ps = null;/*객체의 담당은 '쿼리문완성' + 쿼리문 실행*/
 ResultSet rs = null; /*select문의 결과를 담을 객체이다.*/
 //여기서 선언하면 try부터는 계속 살아있다.scope 스코프 : 유효범위		
-String sql = "SELECT i_board, title FROM t_board";
+String sql = "SELECT i_board, title FROM t_board ORDER BY i_board DESC";
 /*t_board옆에 세미콜론 붙이면 인젝션 공격이 가능해지므로 조심해야한다.where i_board*/
 //가독성 때문에 떨어뜨려놓음.
 

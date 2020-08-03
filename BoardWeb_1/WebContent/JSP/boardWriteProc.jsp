@@ -21,13 +21,19 @@
 	String title = request.getParameter("title");
 	String ctnt = request.getParameter("ctnt");
 	String strI_student = request.getParameter("i_student"); 
+	
+	
+	if( "".equals(title) || "".equals(ctnt) || "".equals(strI_student) ) {
+	response.sendRedirect("/jsp/boardWrite.jsp?err=10");
+	return;
+
 	int i_student = Integer.parseInt(strI_student);
 	
 	Connection con = null;
 	PreparedStatement ps = null;
 	
 	int result=-1;
-	
+	//sql문에서 따옴표 안에 한칸씩 띄워줘야한다. sql문은 띄어쓰기로 구별하기 때문.
 	String sql = " INSERT INTO t_board (i_board,title,ctnt,i_student) "
 				+ " SELECT nvl(max(i_board), 0)+1, ?, ?, ? "
 				+ " FROM t_board ";
@@ -48,22 +54,31 @@
 		if (ps != null) {try {ps.close();} catch (Exception e) {}}
 		if (con != null) {try {con.close();} catch (Exception e) {}}
 	}
-	
-	
+		
+	int err = 0;
 	switch(result) {
-	case -1:
-		response.sendRedirect("/JSP/boardWrite.jsp?err=-1");
+	//case -1:
+		//response.sendRedirect("/JSP/boardWrite.jsp?err=-1");
+		//break;
+	//case 0:
+		//response.sendRedirect("/JSP/boardWrite.jsp?err=0");
+		//break;
+		case 1:
+		response.sendRedirect("/JSP/boardList.jsp");
+		return;
+		case 0:
+		err = 10;
 		break;
-	case 0:
-		response.sendRedirect("/JSP/boardWrite.jsp?err=0");
+		case -1:
+		err = 20;
 		break;
-	case 1:
-		response.sendRedirect("/JSP/boardWrite.jsp");
-		break;
-	}
+		
+		
+	} response.sendRedirect("/JSP/boardWrite.jsp?err="+err);
 %>
 	
 	<div> title: <%=title %></div>
 	<div> ctnt:  <%=ctnt %></div>
 	<div> strI_student: <%=strI_student%></div>
-	<%//시퀀스? %>
+	<%/*시퀀스?*/ %>
+	
