@@ -13,11 +13,12 @@
 </head>
 <body>
 	<div>게시판 리스트
-	<a href="/boardWirte"><button>글쓰기</button></a>
+	<a href="/boardWrite"><button>글쓰기</button></a>
 	</div>
 	<table>
 	<tr>
 	<th>No</th>
+	<th>제목</th>
 	<th>작성자</th>
 	</tr>
 	<% for(BoardVO vo : list){ %>

@@ -21,12 +21,12 @@ public class DbCon {
 	}
 	
 public static void close (Connection con, PreparedStatement ps, ResultSet rs){
-		if (rs != null) {try {rs.close();} catch (Exception e) {}}
-		if (ps != null) {try {ps.close();} catch (Exception e) {}}
-		if (con != null) {try {con.close();} catch (Exception e) {}}
+	if (rs != null) {try {rs.close();} catch (Exception e) {}}
+	if (ps != null) {try {ps.close();} catch (Exception e) {}}
+	if (con != null) {try {con.close();} catch (Exception e) {}}
 	}
+
 public static void close (Connection con, PreparedStatement ps){
-if (ps != null) {try {ps.close();} catch (Exception e) {}}
-if (con != null) {try {con.close();} catch (Exception e) {}}
-}
+	close(con, ps, null);
+	}
 }
