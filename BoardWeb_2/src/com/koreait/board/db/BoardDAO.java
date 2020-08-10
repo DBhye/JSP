@@ -76,44 +76,33 @@ public class BoardDAO {
 			DbCon.close(con,ps,rs);
 		}
 		return vo;
+	}	
+	public static int insBoard(BoardVO param) {
 		
-	public static selWrite() {
-		
-		BoardVO vo = null;
+		int result = 0;
 		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		PreparedStatement ps= null;
 		
-		String title = request.getParameter("title");
-		String ctnt = request.getParameter("ctnt");
-		String strI_student = request.getParameter("i_student"); 
-		int i_student = Integer.parseInt(strI_student);
 		
-		Connection con = null;
-		PreparedStatement ps = null;
+		String sql = "INSERT INTO t_board"
+						+ " (i_board, title, ctnt, i_student) "
+						+ " VALUES "
+						+ " (seq_board.nextval, ?, ?, ?) ";
 		
-		int result=-1;
-		
-		String sql = " INSERT INTO t_board (i_board,title,ctnt,i_student) "
-					+ " SELECT nvl(max(i_board), 0)+1, ?, ?, ? "
-					+ " FROM t_board ";
-		try{
-			con = getCon();
-			ps = con.prepareStatement(sql);	
-			ps.setNString(1, title);
-			ps.setNString(2, ctnt);
-			ps.setInt(3,i_student);
+		try {
+			con = DbCon.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setNString(1, param.getTitle());
+			ps.setNString(2, param.getCtnt());
+			ps.setInt(3, param.getI_student());
 			
-			result = ps.executeUpdate();
+			ps.executeUpdate(); //select 때만 excuteQuery
+		} catch (Exception e) {}
 		
-		} catch(Exception e) {
-			e.printStackTrace();
-			
-		} finally {
-		
-			if (ps != null) {try {ps.close();} catch (Exception e) {}}
-			if (con != null) {try {con.close();} catch (Exception e) {}}
-		}
-	}
+		return result; //resultset은 select일때만 필요하다.
+							// 지금은 정수값만 받아온다.
+							// 행을 삭제한다던지, 행을 삽입하는 작업에는 데이터를 데려와서 저장하는것이 불필요.
+							// sql문 create sequence seq_board; (시퀀스란? 순차적으로 증가하는 순번을 반환하는 데이터베이스 객체)
+							// select seq_board.nextval from dual;(1씩 올라간다.)
 	}
 }

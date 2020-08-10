@@ -8,4 +8,8 @@ public class Utils {
 			return n;
 		}
 	}
+	
+	public static int parseStrToInt(String str) {
+		return parseStrToInt(str, 0);
+	}
 }
