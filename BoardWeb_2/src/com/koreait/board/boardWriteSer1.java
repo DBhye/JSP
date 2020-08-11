@@ -11,8 +11,8 @@ import com.koreait.board.common.Utils;
 import com.koreait.board.db.BoardDAO;
 import com.koreait.board.vo.BoardVO;
 
-@WebServlet("/BoardWirteSer")
-public class BoardWirteSer extends HttpServlet {
+@WebServlet("/boardWrite")
+public class boardWriteSer1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
@@ -28,24 +28,23 @@ public class BoardWirteSer extends HttpServlet {
 		String ctnt = request.getParameter("ctnt");
 		String strI_student = request.getParameter("i_student");
 		
-		System.out.println("title");
-		System.out.println("ctnt");
+		System.out.println("title : " + title);
+		System.out.println("ctnt :" + ctnt);
 		System.out.println("strI_student : " + strI_student);
 		
 		BoardVO param = new BoardVO();
 		param.setTitle(title);
 		param.setCtnt(ctnt);
-		param.setI_board(Utils.parseStrToInt(strI_student));
+		param.setI_student(Utils.parseStrToInt(strI_student));
 		
 		int result = BoardDAO.insBoard(param);
 		System.out.println("result : "+result);
 		
-		
-		
-		
-		
-	
-		
+		if(result == 1) {
+			response.sendRedirect("/boardList");
+		}
+		else
+			request.setAttribute("msg", "에러가 발생하였습니다.");
+		}
+			
 	}
-
-}
