@@ -35,7 +35,9 @@ public class LoginSer extends HttpServlet {
 		param.setUser_id(user_id);
 		param.setUser_pw(encrypt_pw);
 
-		int result = UserDAO.selUser(param);
+		int result = UserDAO.login(param);
+		// param 안에 들어있는 값: i_user , user_id, nm 
+		
 		/*
 		 * if(result != 1) { //에러처리 if(result == 2) { request.setAttribute("msg_1",
 		 * "비밀번호 틀림");

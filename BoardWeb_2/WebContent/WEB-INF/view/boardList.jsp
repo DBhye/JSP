@@ -19,6 +19,7 @@
 	<tr>
 	<th>No</th>
 	<th>제목</th>
+	<th>내용</th>
 	<th>작성자</th>
 	</tr>
 	<% for(BoardVO vo : list){ %>
