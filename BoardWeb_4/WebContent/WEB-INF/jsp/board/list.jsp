@@ -13,7 +13,7 @@ table {border: 1px solid black;border-collapse: collapse;}
 </style>
 </head>
 <body>
-<div>${loginUser.nm} 님 환영합니다!</div>
+<div>${loginUser.nm} 님 환영합니다!<a href="/logout">로그아웃</a></div>
 <div>
 <a href="/board/regmod">글쓰기</a>
 </div>
@@ -28,16 +28,16 @@ table {border: 1px solid black;border-collapse: collapse;}
 	</tr>
 	<c:forEach items="${data}" var="item">
 	<tr class="itemRow" onclick="moveToDetail(${item.i_board})">
-	<td>${item.i_board }</td>
-	<td>${item.title }</td>
-	<td>${item.hits }</td>
-	<td>${item.i_user }</td>
-	<td>${item.r_dt }</td>
+	<td>${item.i_board}</td>
+	<td>${item.title}</td>
+	<td>${item.hits}</td>
+	<td>${item.i_user}</td>
+	<td>${item.r_dt}</td>
 	</tr>
 	</c:forEach>
 	</table>
 	<script>
-	function moveToDetail(i_board){
+	function moveToDetail(i_board) {
 		
 		location.href = "/board/detail?i_board=" + i_board
 	}

@@ -16,7 +16,7 @@
 	<div><input type="password" name="user_pw" placeholder="비밀번호" ></div>
 	<div><input type="submit" value="로그인"></div>
 </form>
-
+	<div><a href="/join">가입안하셨나요?</a></div>
 </div>
 </body>
 </html>

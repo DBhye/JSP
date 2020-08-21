@@ -20,10 +20,16 @@ public class LoginSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UserVO loginUser = MyUtils.getLoginUser(request);		
+		if(loginUser != null) {
+			response.sendRedirect("/board/list");
+			return;
+		}
 		ViewResolver.forward("user/login", request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String user_id = request.getParameter("user_id");
 		String user_pw = request.getParameter("user_pw");
 		String encrypt_pw = MyUtils.encryptString(user_pw);

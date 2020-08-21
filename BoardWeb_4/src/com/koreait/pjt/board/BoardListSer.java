@@ -23,6 +23,7 @@ public class BoardListSer extends HttpServlet {
 			throws ServletException, IOException {
 		
 		request.setAttribute("data", BoardDAO.selBoardList());
+
 		ViewResolver.forwardLoginChk("board/list", request, response);
 	}
 
