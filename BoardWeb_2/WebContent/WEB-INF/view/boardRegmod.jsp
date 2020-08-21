@@ -12,6 +12,8 @@ color:#e74c3c;
 </style>
 </head>
 <body>
+<% // '/'안붙이면 앞주소 그대로에 뒤만 바뀜
+//붙이면 접근하는 아이피주소만 그대로고 나머지 주소 전부 바뀜 %>
 	<div>${data == null ? '글등록' : '글수정' }</div>
 	<div class="err">${msg }</div>
 	<form id="frm" action="/${data == null ? 'boardWrite' : 'boardMod' }" method="post" Wonsubmit="return chk()">
