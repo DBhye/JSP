@@ -8,9 +8,11 @@ import java.util.List;
 
 import com.koreait.pjt.vo.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
+import com.koreait.pjt.vo.UserLoginHistoryVO;
 
 public class BoardDAO {
-
+	
+	 
 	public static int insBoard(BoardVO param) {
 		String sql = " INSERT INTO t_board4" + " (i_board, title, ctnt, i_user)" + " VALUES"
 				+ " (seq_board4.nextval, ?, ?, ?) ";
@@ -125,6 +127,25 @@ public class BoardDAO {
 				ps.setNString(1, param.getTitle());
 				ps.setNString(2, param.getCtnt());
 				ps.setInt(3, param.getI_board());
+
+			}
+		});
+	}
+	
+	public static int addLike(BoardVO param) {
+		String sql=" SELECT  A.*, B.nm, DECODE(B.i_user, null,0,1) as yn_like "
+						+" FROM t_board4 A "
+						+" INNER JOIN t_user B "
+						+" ON A.i_user = B.i_user "
+						+" LEFT JOIN t_board4_like C "
+						+" ON A.i_board = C.i_board "
+						+" AND C.i_user = ? " 
+						+" WHERE A.i_board = ? ";
+		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
+			@Override
+			public void update(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, param.getI_user());
+				ps.setInt(2, param.getI_board());
 
 			}
 		});
