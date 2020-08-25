@@ -11,6 +11,7 @@ public class BoardVO {
 	private String nm;
 	
 	
+	
 	public String getNm() {
 		return nm;
 	}

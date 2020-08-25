@@ -6,33 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>상세페이지</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <style> 
-	.heart {
-      position: relative;
-      width: 100px;
-      height: 90px;
-     padding: 0;
-	border: none;
-	background: none;
-    }
-    .heart:before,
-    .heart:after {
-      position: absolute;
-      content: "";
-      left: 50px;
-      top: 0;
-      width: 50px;
-      height: 80px;
-      background: pink;
-      border-radius: 50px 50px 0 0;
-      transform: rotate(-45deg);
-      transform-origin: 0 100%;
-    }
-    .heart:after {
-      left: 0;
-      transform: rotate(45deg);
-      transform-origin: 100% 100%;
-    }
+	.pointerCursor { cursor: pointer; }
+	span { 
+background: linear-gradient(to bottom, #ba5370, #f4e2d8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+	
+}
 </style>
 </head>
 <body>
@@ -44,21 +27,29 @@
 		<input type="hidden" name="i_board" value="${data.i_board}">				
 		<a href="#" onclick="submitDel()">삭제</a>
 		</form>			
-			<button class="heart" id="" ></button> 
 		</c:if>
 	</div>
 	<div>제목: ${data.title}</div>
 	<div>일시: ${data.r_dt}</div>
 	<div>작성자: ${data.nm}</div>
 	<div>조회수: ${data.hits}</div>
+	<div class="pointerCursor" onclick="toggleLike((${data.yn_like}))">
+		  <c:if test="${data.yn_like==0 }">
+             <span class="material-icons">favorite_border</span>
+          </c:if>
+          <c:if test="${data.yn_like==1 }">
+             <span class="material-icons">favorite</span>
+          </c:if>
+	</div>
 	<hr>
 	<div>${data.ctnt}</div>
 	<script>
 		function submitDel() {
 			delFrm.submit()
 		}
-		function addmitLike() {
-			
+		function toggleLike(yn_like) {			//키값      //밸류값
+			location.href="/board/toggleLike?i_board=${data.i_board}&yn_like=" + yn_like
+		
 		}
 	</script>
 </body>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
 import com.koreait.pjt.db.BoardDAO;
+import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 
 @WebServlet("/board/detail")
@@ -39,16 +40,21 @@ public class BoardDetailSer extends HttpServlet {
 		if(readI_user==null || readI_user !=loginUser.getI_user()) {
 		BoardDAO.addHits(i_board);
 		application.setAttribute("read_"+strI_board, loginUser.getI_user());
-		} // 로그인한 유저의 pk값(i_user를) 받아와서 'read_10' 키값으로 저장
+		} 
+		
+		BoardVO param = new BoardVO();
+		param.setI_user(loginUser.getI_user());
+		param.setI_board(i_board);
+		// 로그인한 유저의 pk값(i_user를) 받아와서 'read_10' 키값으로 저장
 		//단독으로 조회수 올리기 방지 --- [end]
-		request.setAttribute("data", BoardDAO.selBoard(i_board));
+		request.setAttribute("data", BoardDAO.selBoard(param));
 		
 		ViewResolver.forward("board/detail", request, response);
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// pose는 form으로만 보낼수있다!!!!!!!!!!!
+		// post는 form으로만 보낼수있다!!!!!!!!!!!
 	}
 
 }

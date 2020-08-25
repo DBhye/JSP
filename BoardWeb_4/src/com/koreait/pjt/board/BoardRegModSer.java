@@ -29,11 +29,12 @@ public class BoardRegModSer extends HttpServlet {
 	      }
 
 	 //jsp 에서 서블릿으로 해당 키값으로  값을 넣어주지않으면 서블릿에 값이 넘어오지 않는다.(getParameter는 문자열로 넘어옴)
-		  String strI_board = request.getParameter("i_board");
-	      int i_board = MyUtils.parseStrToInt(strI_board);
-	      
-	      BoardDomain data = BoardDAO.selBoard(i_board);
-	      request.setAttribute("data", data);
+		String strI_board = request.getParameter("i_board");
+		int i_board = MyUtils.parseStrToInt(strI_board);
+		BoardVO param= new BoardVO();
+		param.setI_board(i_board);
+	    BoardDomain data = BoardDAO.selBoard(param);
+	     request.setAttribute("data", data);
 	      
 	      ViewResolver.forwardLoginChk("board/regmod", request, response); // viewresolver 파일명
 
