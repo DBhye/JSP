@@ -15,7 +15,7 @@ import com.koreait.pjt.ViewResolver;
 import com.koreait.pjt.db.BoardDAO;
 import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
-
+import com.koreait.pjt.db.*;
 @WebServlet("/board/detail")
 public class BoardDetailSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -49,8 +49,9 @@ public class BoardDetailSer extends HttpServlet {
 		//단독으로 조회수 올리기 방지 --- [end]
 		request.setAttribute("data", BoardDAO.selBoard(param));
 		
-		ViewResolver.forward("board/detail", request, response);
+		request.setAttribute("cmtList", BoardCmtDAO.selCmtList(i_board));
 		
+		ViewResolver.forward("board/detail", request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

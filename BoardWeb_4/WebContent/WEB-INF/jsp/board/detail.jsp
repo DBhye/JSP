@@ -13,9 +13,8 @@
 	span { 
 background: linear-gradient(to bottom, #ba5370, #f4e2d8);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-	
-}
+  -webkit-text-fill-color: transparent;}
+  button { backgound-color:#f4e2d8; }
 </style>
 </head>
 <body>
@@ -42,7 +41,42 @@ background: linear-gradient(to bottom, #ba5370, #f4e2d8);
           </c:if>
 	</div>
 	<hr>
-	<div>${data.ctnt}</div>
+	<div>
+		<form id="cmtFrm" action="/board/cmt" method="post">
+			<input type="hidden" name="i_cmt" value="0">
+			<input type="hidden" name="i_board" value="${data.i_board}">
+		<div>${data.ctnt}</div>
+		<div>
+			<input type="text" name="cmt" placeholder="댓글내용">
+			<input type="submit" value="전송">
+		</div>
+	</form>
+	</div>
+	 <div class="marginTop30">
+        	<table>
+        		<tr>
+        			<th>내용</th>
+        			<th>글쓴이</th>
+        			<th>등록일</th>
+        			<th>비고</th>
+        		</tr>
+        		<c:forEach items="${cmtList}" var="item">
+        			<tr>
+        				<td>${item.cmt}</td>
+        				<td>${item.nm}</td>
+        				<td>${item.r_dt}</td> 
+        				<td>
+        				<c:if test="${item.i_user == loginUser.i_user}">
+        						<a href="/board/cmt?i_board=${data.i_board}&i_cmt=${item.i_cmt}"><button>삭제</button></a>
+        						<button>수정</button>
+        				</c:if>
+
+					</td>
+        			</tr>
+        		</c:forEach>
+        	</table>
+        </div>
+    </div>
 	<script>
 		function submitDel() {
 			delFrm.submit()
@@ -51,6 +85,9 @@ background: linear-gradient(to bottom, #ba5370, #f4e2d8);
 			location.href="/board/toggleLike?i_board=${data.i_board}&yn_like=" + yn_like
 		
 		}
+	function updCmt() {
+		updFrm.submit()
+	}
 	</script>
 </body>
 </html>

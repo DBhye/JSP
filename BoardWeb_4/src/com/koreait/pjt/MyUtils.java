@@ -15,6 +15,10 @@ import com.koreait.pjt.vo.UserVO;
 //(인터페이스덕분에 다른 오라클이 아닌 다른 데이터베이스로 넘어올때 유연해진다.)
 
 public class MyUtils {
+	public static int getIntParameter(HttpServletRequest request, String keyNm) {
+		return parseStrToInt(request.getParameter(keyNm));
+	}
+	
 	public static int parseStrToInt(String str) {
 		return parseStrToInt(str, 0);
 	}

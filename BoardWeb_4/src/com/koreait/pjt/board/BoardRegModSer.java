@@ -35,7 +35,6 @@ public class BoardRegModSer extends HttpServlet {
 		param.setI_board(i_board);
 	    BoardDomain data = BoardDAO.selBoard(param);
 	     request.setAttribute("data", data);
-	      
 	      ViewResolver.forwardLoginChk("board/regmod", request, response); // viewresolver 파일명
 
 	}
