@@ -1,25 +1,25 @@
 package com.koreait.pjt.vo;
 
-public class BoardDomain extends BoardVO{
+public class BoardDomain extends BoardVO {
 	private String nm;
 	private int yn_like;
-	private String cmt;
-	private int i_cmt;
-	
-	public int getI_cmt() {
-		return i_cmt;
+	private int record_cnt; //페이지당 나오는 레코드 수(글수)
+	private int page;
+
+	public int getPage() {
+		return page;
 	}
 
-	public void setI_cmt(int i_cmt) {
-		this.i_cmt = i_cmt;
+	public void setPage(int page) {
+		this.page = page;
 	}
 
-	public String getCmt() {
-		return cmt;
+	public int getRecord_cnt() {
+		return record_cnt;
 	}
 
-	public void setCmt(String cmt) {
-		this.cmt = cmt;
+	public void setRecord_cnt(int record_cnt) {
+		this.record_cnt = record_cnt;
 	}
 
 	public String getNm() {

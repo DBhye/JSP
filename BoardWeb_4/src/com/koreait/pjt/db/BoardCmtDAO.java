@@ -11,8 +11,9 @@ import com.koreait.pjt.vo.BoardCmtVO;
 
 public class BoardCmtDAO {
 	public static int insCmt(BoardCmtVO param) {
-		String sql = " INSERT INTO t_board4_cmt " + " (i_cmt, i_board, i_user, cmt) " + " VALUES "
-				+ " (seq_board4_cmt.nextval, ?, ?, ?) ";
+		String sql = " INSERT INTO t_board4_cmt " + " (i_cmt, i_board, i_user, cmt) " 
+						+ " VALUES "
+						+ " (seq_board4_cmt.nextval, ?, ?, ?) ";
 
 		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 
@@ -28,8 +29,13 @@ public class BoardCmtDAO {
 	public static List<BoardCmtDomain> selCmtList(final int i_board) {
 		List<BoardCmtDomain> list = new ArrayList();
 
-		String sql = " SELECT A.i_cmt, B.i_user " + " , A.cmt, A.r_dt, B.nm " + " FROM t_board4_CMT A "
-				+ " INNER JOIN t_user B " + " ON A.i_user = B.i_user " + " WHERE A.i_board = ? " + " ORDER BY A.i_cmt ";
+		String sql = " SELECT A.i_cmt, B.i_user "
+					+ " , A.cmt, A.r_dt, A.m_dt, B.nm "
+					+ " FROM t_board4_CMT A "
+					+ " INNER JOIN t_user B "
+					+ " ON A.i_user = B.i_user "
+					+ " WHERE A.i_board = ? "
+					+ " ORDER BY A.i_cmt ";
 
 		JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
@@ -46,7 +52,11 @@ public class BoardCmtDAO {
 					vo.setI_user(rs.getInt("i_user"));
 					vo.setCmt(rs.getNString("cmt"));
 					vo.setR_dt(rs.getNString("r_dt"));
+					vo.setM_dt(rs.getNString("m_dt"));
 					vo.setNm(rs.getNString("nm"));
+					
+					System.out.println("i_cmt: " + rs.getInt("i_cmt"));
+					System.out.println("cmt: "+ rs.getNString("cmt"));
 
 					list.add(vo);
 				}
@@ -59,14 +69,16 @@ public class BoardCmtDAO {
 	}
 
 	public static int updCmt(BoardCmtVO param) {
-		String sql = " UPDATE t_board4_cmt SET cmt = ? " 
-						+ "WHERE i_cmt = ? AND i_ user = ?";
+		String sql = " UPDATE t_board4_cmt "
+						+ " SET cmt = ? "
+						+ " , m_dt= sysdate " 
+						+ " WHERE i_cmt=? AND i_user=? ";
 		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
 				ps.setNString(1, param.getCmt());
 				ps.setInt(2, param.getI_cmt());
-				ps.setInt(2, param.getI_user());
+				ps.setInt(3, param.getI_user());
 			}
 		});
 	}
