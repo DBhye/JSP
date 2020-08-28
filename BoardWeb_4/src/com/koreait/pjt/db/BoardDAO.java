@@ -25,66 +25,73 @@ public class BoardDAO {
 		});
 	}
 
-	public static List<BoardVO> selBoardList(BoardDomain param) {
-		List<BoardVO> list = new ArrayList();
-
-		String sql = " SELECT A.* FROM "
-					+ " ( "
-					+ " 	    SELECT ROWNUM as RNUM, A.* FROM "
-					+ " 	    ( "
-					+ " 	        SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
-					+ " 	        FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
-					+ " 	        ORDER BY i_board DESC "
-					+ " 	    ) A "
-					+ " 	    WHERE ROWNUM <= ? "
-					+ " 	)A "
-					+ " 	WHERE A.RNUM > ? ";
-
+	public static List<BoardDomain> selBoardList(BoardDomain param) {
+		List<BoardDomain> list = new ArrayList();
+		/*
+		String sql = " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
+				+ " FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
+				+ " ORDER BY i_board DESC ";
+		*/
+		String sql = " SELECT A.* FROM ( "
+				+ " SELECT ROWNUM as RNUM, A.* FROM ( "
+				+ " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
+				+ " FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
+				+ " WHERE A.title LIKE ? "
+				+ " ORDER BY i_board DESC "
+				+ " ) A WHERE ROWNUM <= ? "
+				+ " ) A WHERE A.RNUM > ? ";
+		
 		int result = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
 			@Override
 			public void prepared(PreparedStatement ps) throws SQLException {
-				int eIdx = param.getPage() * param.getRecord_cnt(); 
-				int sIdx = eIdx - param.getRecord_cnt();
-				ps.setInt(1, eIdx);
-				ps.setInt(2, sIdx);
+				ps.setNString(1,param.getSearchText());
+				ps.setInt(2, param.geteIdx());
+				ps.setInt(3, param.getsIdx());
 			}
 
 			@Override
 			public int executeQuery(ResultSet rs) throws SQLException {
-				while (rs.next()) {
-					int i_board = rs.getInt("i_board");
+				while(rs.next()) {
+					int i_board = rs.getInt("i_board");	
 					String title = rs.getNString("title");
 					int hits = rs.getInt("hits");
 					int i_user = rs.getInt("i_user");
 					String r_dt = rs.getNString("r_dt");
-
-					BoardVO vo = new BoardVO();
+					String nm = rs.getNString("nm");
+					
+					BoardDomain vo = new BoardDomain();
 					vo.setI_board(i_board);
 					vo.setTitle(title);
 					vo.setHits(hits);
 					vo.setI_user(i_user);
 					vo.setR_dt(r_dt);
-
+					vo.setNm(nm);
+					
 					list.add(vo);
 				}
 				return 1;
-			}
+			}			
 		});
-
+		
 		return list;
 	}
-
+	
 	public static BoardDomain selBoard(final BoardVO param) {
 		final BoardDomain result = new BoardDomain();
 		result.setI_board(param.getI_board());
-
+		
 		String sql = " SELECT B.nm, A.i_user "
-				+ " , A.title, A.ctnt, A.hits, TO_CHAR(A.r_dt, 'YY/MM/DD HH24:MI') as r_dt "
-				+ " , DECODE(C.i_user, null, 0, 1) as yn_like " + " FROM t_board4 A " + " INNER JOIN t_user B "
-				+ " ON A.i_user = B.i_user " + " LEFT JOIN t_board_4_like C " + " ON A.i_board = C.i_board "
-				+ " AND C.i_user = ? " + " WHERE A.i_board=? ";
-
+				+ " , A.title, A.ctnt, A.hits, TO_CHAR(A.r_dt, 'YYYY/MM/DD HH24:MI') as r_dt"
+				+ " , DECODE(C.i_user, null, 0, 1) as yn_like "
+				+ " FROM t_board4 A "
+				+ " INNER JOIN t_user B "
+				+ " ON A.i_user = B.i_user "
+				+ " LEFT JOIN t_board_4_like C "
+				+ " ON A.i_board = C.i_board "
+				+ " AND C.i_user = ? "
+				+ " WHERE A.i_board = ? ";
+		
 		int resultInt = JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
 
 			@Override
@@ -95,8 +102,8 @@ public class BoardDAO {
 
 			@Override
 			public int executeQuery(ResultSet rs) throws SQLException {
-				if (rs.next()) {
-					result.setI_user(rs.getInt("i_user"));
+				if(rs.next()) {
+					result.setI_user(rs.getInt("i_user")); //작성자 i_user
 					result.setNm(rs.getNString("nm"));
 					result.setTitle(rs.getNString("title"));
 					result.setCtnt(rs.getNString("ctnt"));
@@ -107,9 +114,34 @@ public class BoardDAO {
 				return 1;
 			}
 		});
-
+		
 		return result;
 	}
+	
+	//페이징 숫자 가져오기 
+	public static int selPagingCnt(final BoardDomain param) {
+		String sql = " SELECT CEIL(COUNT(i_board) / ?) FROM t_board4 "
+						+ " WHERE title like ? ";
+		
+		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
+
+			@Override
+			public void prepared(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, param.getRecord_cnt());
+				ps.setNString(2, param.getSearchText());
+			}
+
+			@Override
+			public int executeQuery(ResultSet rs) throws SQLException {
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+				return 0;
+			}
+			
+		});
+	}
+	
 
 	public static void addHits(final int i_board) {
 		String sql = " UPDATE t_board4 SET hits = hits + 1 " + "WHERE i_board=?";
@@ -123,13 +155,13 @@ public class BoardDAO {
 	}
 
 	public static int delBoard(final BoardVO param) {
-		String sql = " DELETE FROM t_board4 WHERE i_board = ? AND i_user = ? ";
+		String sql = " DELETE FROM t_board4 WHERE i_board = ? ";
 
 		return JdbcTemplate.executeUpdate(sql, new JdbcUpdateInterface() {
 			@Override
 			public void update(PreparedStatement ps) throws SQLException {
 				ps.setInt(1, param.getI_board());
-				ps.setInt(2, param.getI_user());
+				
 			}
 		});
 	}
@@ -165,24 +197,4 @@ public class BoardDAO {
 		});
 	}
 	
-	public static int selPagingCnt(final BoardDomain param) {
-		String sql= " SELECT CEIL(COUNT(i_board) / ?) FROM t_board4 ";
-		
-		return JdbcTemplate.executeQuery(sql, new JdbcSelectInterface() {
-			
-			@Override
-			public void prepared(PreparedStatement ps) throws SQLException {
-				ps.setInt(1,  param.getRecord_cnt());
-			}
-			
-			@Override
-			public int executeQuery(ResultSet rs) throws SQLException {
-				if(rs.next()) {
-					return rs.getInt(1);
-				}
-			return 0;
-			}
-			
-		});
-	}
 }

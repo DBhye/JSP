@@ -52,16 +52,16 @@ button {
             ${data.ctnt }
         </div>
         <div class="btn">
-             <a href="/board/list"><button type="button">목록</button></a>
+             	<a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}">목록</a>
              <c:if test="${loginUser.i_user == data.i_user }">
-                <a href="/regmod?i_board=${data.i_board}">
+                <a href="/board/regmod?i_board=${data.i_board}">
                    <button type="submit">수정</button>
                 </a>
                 <form id="delFrm" action="/board/del" method="post">
                     <input type="hidden" name="i_board" value="${data.i_board}">
                     <a href="#" onclick="submitDel()"><button type="submit">삭제</button></a>
                 </form>
-            </c:if>
+            </c:if> 
         </div>
         
         <div class="marginTop30">
@@ -101,31 +101,35 @@ button {
     </div>
 
 	<script>
-		function clkCmtCancel() {
-	        cmtFrm.i_cmt.value = 0
-	        cmtFrm.cmt = ''
-	        cmtSubmit.value = '전송'
-	     }
-	  
-	     // 댓글 수정
-	     function clkCmtMod(i_cmt, cmt) {
-	        console.log('i_cmt: '+i_cmt)
-	        console.log('cmt: '+cmt)
-	        
-	        cmtFrm.i_cmt.value = i_cmt
-	        cmtFrm.cmt.value = cmt
-	        
-	        cmtSubmit.value = '수정'
-	     }
+	function clkCmtCancel() {
+		cmtFrm.i_cmt.value = 0
+		cmtFrm.cmt.value = ''  //홑따옴표
+		cmtSubmit.value = '전송'
+	}
 
+	function clkCmtDel(i_cmt) {
+		if(confirm('삭제 하시겠습니까?')) {
+			location.href = '/board/cmt?i_board=${data.i_board}&i_cmt=' + i_cmt
+		}
+	}
 	
-		function submitDel() {
-			delFrm.submit()
-		}
-		function toggleLike(yn_like) {			//키값      //밸류값
-			location.href="/board/toggleLike?i_board=${data.i_board}&yn_like=" + yn_like
+	//댓글 수정
+	function clkCmtMod(i_cmt, cmt) {
+		console.log('i_cmt : ' + i_cmt)
 		
-		}
+		cmtFrm.i_cmt.value = i_cmt
+		cmtFrm.cmt.value = cmt
+		
+		cmtSubmit.value = '수정'
+	}
+
+	function toggleLike(yn_like) {
+		location.href='/board/toggleLike?i_board=${data.i_board}&yn_like=' + yn_like
+	}
+
+    function submitDel() {
+        delFrm.submit()
+    }
 
 	</script>
 </body>

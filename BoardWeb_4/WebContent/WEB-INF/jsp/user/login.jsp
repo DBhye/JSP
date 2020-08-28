@@ -12,7 +12,7 @@
 <div class="err">${msg} </div>
 <div class="err">${msg_1} </div>
 <form action="/login" method="post">
-	<div><input type="text" name="user_id" placeholder="아이디" required value="${data.user_id }"></div>
+	<div><input type="text" name="user_id" placeholder="아이디" required value="leelee"></div>
 	<div><input type="password" name="user_pw" placeholder="비밀번호" ></div>
 	<div><input type="submit" value="로그인"></div>
 </form>

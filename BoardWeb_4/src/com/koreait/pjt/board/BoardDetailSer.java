@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.koreait.pjt.MyUtils;
 import com.koreait.pjt.ViewResolver;
 import com.koreait.pjt.db.BoardDAO;
+import com.koreait.pjt.vo.BoardDomain;
 import com.koreait.pjt.vo.BoardVO;
 import com.koreait.pjt.vo.UserVO;
 import com.koreait.pjt.db.*;
@@ -41,12 +42,16 @@ public class BoardDetailSer extends HttpServlet {
 		BoardDAO.addHits(i_board);
 		application.setAttribute("read_"+strI_board, loginUser.getI_user());
 		} 
-		
+			
 		BoardVO param = new BoardVO();
 		param.setI_user(loginUser.getI_user());
 		param.setI_board(i_board);
 		// 로그인한 유저의 pk값(i_user를) 받아와서 'read_10' 키값으로 저장
 		//단독으로 조회수 올리기 방지 --- [end]
+		
+		
+		
+		
 		request.setAttribute("data", BoardDAO.selBoard(param));
 		
 		request.setAttribute("cmtList", BoardCmtDAO.selCmtList(i_board));

@@ -3,8 +3,19 @@ package com.koreait.pjt.vo;
 public class BoardDomain extends BoardVO {
 	private String nm;
 	private int yn_like;
-	private int record_cnt; //페이지당 나오는 레코드 수(글수)
+	private int record_cnt; //페이지당 나오는 레코드 수 (글 수)
+	private int sIdx;
+	private int eIdx;
 	private int page;
+	private String searchText;
+	
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
 
 	public int getPage() {
 		return page;
@@ -12,6 +23,22 @@ public class BoardDomain extends BoardVO {
 
 	public void setPage(int page) {
 		this.page = page;
+	}
+
+	public int getsIdx() {
+		return sIdx;
+	}
+
+	public void setsIdx(int sIdx) {
+		this.sIdx = sIdx;
+	}
+
+	public int geteIdx() {
+		return eIdx;
+	}
+
+	public void seteIdx(int eIdx) {
+		this.eIdx = eIdx;
 	}
 
 	public int getRecord_cnt() {
@@ -22,14 +49,6 @@ public class BoardDomain extends BoardVO {
 		this.record_cnt = record_cnt;
 	}
 
-	public String getNm() {
-		return nm;
-	}
-
-	public void setNm(String nm) {
-		this.nm = nm;
-	}
-
 	public int getYn_like() {
 		return yn_like;
 	}
@@ -38,5 +57,11 @@ public class BoardDomain extends BoardVO {
 		this.yn_like = yn_like;
 	}
 
-	
+	public String getNm() {
+		return nm;
+	}
+
+	public void setNm(String nm) {
+		this.nm = nm;
+	}
 }
