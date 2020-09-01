@@ -34,7 +34,7 @@ public class BoardDAO {
 		*/
 		String sql = " SELECT A.* FROM ( "
 				+ " SELECT ROWNUM as RNUM, A.* FROM ( "
-				+ " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm "
+				+ " SELECT A.i_board, A.title, A.hits, A.i_user, A.r_dt, B.nm, B.profile_img"
 				+ " FROM t_board4 A INNER JOIN t_user B ON A.i_user = B.i_user "
 				+ " WHERE A.title LIKE ? "
 				+ " ORDER BY i_board DESC "
@@ -59,6 +59,7 @@ public class BoardDAO {
 					int i_user = rs.getInt("i_user");
 					String r_dt = rs.getNString("r_dt");
 					String nm = rs.getNString("nm");
+					String profile_img = rs.getNString("profile_img");
 					
 					BoardDomain vo = new BoardDomain();
 					vo.setI_board(i_board);
@@ -67,7 +68,7 @@ public class BoardDAO {
 					vo.setI_user(i_user);
 					vo.setR_dt(r_dt);
 					vo.setNm(nm);
-					
+					vo.setProfile_img(profile_img);
 					list.add(vo);
 				}
 				return 1;
@@ -82,7 +83,7 @@ public class BoardDAO {
 		result.setI_board(param.getI_board());
 		
 		String sql = " SELECT B.nm, A.i_user "
-				+ " , A.title, A.ctnt, A.hits, TO_CHAR(A.r_dt, 'YYYY/MM/DD HH24:MI') as r_dt"
+				+ " , A.title, A.ctnt, A.hits,B.profile_img, TO_CHAR(A.r_dt, 'YYYY/MM/DD HH24:MI') as r_dt"
 				+ " , DECODE(C.i_user, null, 0, 1) as yn_like "
 				+ " FROM t_board4 A "
 				+ " INNER JOIN t_user B "
@@ -110,6 +111,7 @@ public class BoardDAO {
 					result.setHits(rs.getInt("hits"));
 					result.setR_dt(rs.getNString("r_dt"));
 					result.setYn_like(rs.getInt("yn_like"));
+					result.setProfile_img(rs.getNString("profile_img"));
 				}
 				return 1;
 			}

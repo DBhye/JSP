@@ -22,6 +22,19 @@ span {
 button {
 	backgound-color: #f4e2d8;
 }
+.containerPImg {
+		display: inline-block;	
+		width: 30px;
+		height: 30px;
+	    border-radius: 50%;
+	    overflow: hidden;
+	}
+	
+	.pImg {
+	
+		 object-fit: cover;
+		  max-width:100%;
+	}
 </style>
 </head>
 <body>
@@ -33,7 +46,17 @@ button {
             </tr>
             <tr class="boardInfo">
                 <th id="nm">작성자</th>
-                <td id="nm-1">${data.nm }</td>
+                <td id="nm-1"><div class="containerPImg">
+							<c:choose>
+								<c:when test="${data.profile_img != null}">
+									<img class="pImg" src="/img/user/${data.i_user}/${data.profile_img}">
+								</c:when>
+								<c:otherwise>
+									<img class="pImg" src="/img/cat.jpg">
+								</c:otherwise>
+							</c:choose>
+						</div>
+						${data.nm}</td>
                 <th id="date">작성일시</th>
                 <td id="date-1"> ${data.r_dt } <small>${data == null ? '' : '수정' }</small> </td>
                 <th id="hits">조회수</th>
@@ -86,7 +109,17 @@ button {
               <c:forEach items="${cmtList}" var="item">
                  <tr>
                     <td>${item.cmt}</td>
-                    <td>${item.nm}</td>
+                    <td><div class="containerPImg">
+							<c:choose>
+								<c:when test="${item.profile_img != null}">
+									<img class="pImg" src="/img/user/${item.i_user}/${item.profile_img}">
+								</c:when>
+								<c:otherwise>
+									<img class="pImg" src="/img/cat.jpg">
+								</c:otherwise>
+							</c:choose>
+						</div>
+						${item.nm}</td>
                     <td>${item.m_dt}</td>
                     <td>
                        <c:if test="${item.i_user==loginUser.i_user}">
