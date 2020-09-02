@@ -7,23 +7,50 @@ public class BoardDomain extends BoardVO {
 	private int sIdx;
 	private int eIdx;
 	private int page;
+	private String searchType;
 	private String searchText;
 	private String profile_img;
+	private int like_cnt;
+	private int cmt_cnt;
 	
-	public String getProfile_img() {
-		return profile_img;
+	public String getSearchType() {
+		return searchType;
 	}
 
-	public void setProfile_img(String profile_img) {
-		this.profile_img = profile_img;
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
 	}
-
+	
 	public String getSearchText() {
 		return searchText;
 	}
 
 	public void setSearchText(String searchText) {
 		this.searchText = searchText;
+	}
+
+	public int getLike_cnt() {
+		return like_cnt;
+	}
+
+	public void setLike_cnt(int like_cnt) {
+		this.like_cnt = like_cnt;
+	}
+
+	public int getCmt_cnt() {
+		return cmt_cnt;
+	}
+
+	public void setCmt_cnt(int cmt_cnt) {
+		this.cmt_cnt = cmt_cnt;
+	}
+
+	public String getProfile_img() {
+		return profile_img;
+	}
+
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
 	}
 
 	public int getPage() {

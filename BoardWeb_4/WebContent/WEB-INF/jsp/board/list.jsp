@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
- 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>리스트</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
 	* {
 		font-family: 'Noto Sans KR', sans-serif;
@@ -27,7 +27,7 @@
 		font-weight: bold;
 	}
 	table {
-		width: 800px;
+		width: 1200px;
 		margin: 70px auto; 
 		border: 0.5px solid #58585a;
 		border-collapse: collapse;
@@ -35,6 +35,10 @@
 	tr, td{
 		text-align : center;
 		padding: 7px;
+		
+	}
+	td {
+		width:50px;
 	}
 	th {
 		text-align : center;
@@ -83,7 +87,7 @@
 		margin-left: 13px;
 	}
 	
-.containerPImg {
+	.containerPImg {
 		display: inline-block;	
 		width: 30px;
 		height: 30px;
@@ -92,9 +96,13 @@
 	}
 	
 	.pImg {
-	
-		 object-fit: cover;
-		  max-width:100%;
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
+	.highlight {
+		color: red;
+		font-weight: bold;
 	}
 </style>
 </head>
@@ -102,13 +110,13 @@
 	<div class="container">
 		<div class="usr-name">
 			<span id="usr-color">${loginUser.nm}</span>님 환영합니다
-			<a href="/user/profile" >프로필</a>
+			<a href="/user/profile">프로필</a>
 			<button id="logout"><a href="/logout">로그아웃</a></button>
 		</div>
 		<div>
 			<form id="selFrm" action="/board/list" method="get">
-				<input type="hidden"  name=>
-				<input type="hidden" name="page" value="${ page}">
+				<input type="hidden" name="searchText" value="${param.searchText}">
+				<input type="hidden" name="page" value="${page}">
 				레코드 수 :
 				<select name="record_cnt" onchange="changeRecordCnt()">
 					<c:forEach begin="10" end="30" step="10" var="item">
@@ -129,14 +137,26 @@
 				<th>No</th>
 				<th>제목</th>
 				<th>조회수</th>
+				<th>좋아요</th>				
+				<th> </th>
+				<th> </th>
 				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
 			<c:forEach items="${list}" var="item">
 				<tr class="itemRow" onclick="moveToDetail(${item.i_board})">
 					<td>${item.i_board}</td>
-					<td>${item.title}</td>
+					<td>${item.title} (${item.cmt_cnt})</td>
 					<td>${item.hits}</td>
+					<td>${item.like_cnt}</td>
+					<td>
+						<c:if test="${item.yn_like == 0 }">
+							<span class="material-icons">favorite_border</span>                	
+	                	</c:if>
+	                	<c:if test="${item.yn_like == 1}">
+	                		<span class="material-icons" style="color: red;">favorite</span>
+	                	</c:if>
+					</td>
 					<td>
 						<div class="containerPImg">
 							<c:choose>
@@ -144,10 +164,12 @@
 									<img class="pImg" src="/img/user/${item.i_user}/${item.profile_img}">
 								</c:when>
 								<c:otherwise>
-									<img class="pImg" src="/img/cat.jpg">
+									<img class="pImg" src="/img/jpg">
 								</c:otherwise>
 							</c:choose>
 						</div>
+					</td>
+					<td>
 						${item.nm}
 					</td>
 					<td>${item.r_dt}</td>
@@ -155,10 +177,16 @@
 			</c:forEach>
 		</table>
 		<div>
-		<form action="/board/list">
-			<input type="search" name="searchText">
-			<input type="submit" value="검색">
-		</form></div>
+			<form action="/board/list">
+			<select name="searchType">
+			<option value="a" ${searchType == 'a' ? 'selected' : '' }>제목</option>
+			<option value="b" ${searchType == 'b' ? 'selected' : '' }>내용</option>
+			<option value="c" ${searchType == 'c' ? 'selected' : '' }>제목+내용</option>
+			</select>
+				<input type="search" name="searchText" value="${param.searchText}">
+				<input type="submit" value="검색">
+			</form>
+		</div>
 		<div class="fontCenter">
 			<c:forEach begin="1" end="${pagingCnt}" var="item">
 				<c:choose>
@@ -167,7 +195,7 @@
 					</c:when>
 					<c:otherwise>
 						<span class="pagingFont">
-							<a href="/board/list?page=${item}&record_cnt=${param.record_cnt}&searchText=${param.searchText}">${item}</a>
+							<a href="/board/list?page=${item}&record_cnt=${param.record_cnt}&searchType=${searchType}&searchText=${param.searchText}">${item}</a>
 						</span>
 					</c:otherwise>
 				</c:choose>
@@ -183,7 +211,7 @@
 		}
 	
 		function moveToDetail(i_board) {
-			location.href = '/board/detail?page=${page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}&i_board=' + i_board
+			location.href = '/board/detail?page=${page}&record_cnt=${param.record_cnt}&searchType=${searchType}&searchText=${param.searchText}&i_board=' + i_board
 		}
 	</script>
 </body>

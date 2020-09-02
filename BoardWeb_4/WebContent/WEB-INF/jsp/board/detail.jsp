@@ -35,6 +35,11 @@ button {
 		 object-fit: cover;
 		  max-width:100%;
 	}
+	
+	.highlight {
+		color: red;
+		font-weight: bold;
+	}
 </style>
 </head>
 <body>
@@ -42,7 +47,7 @@ button {
         <table>
             <tr id="title">
                 <th>제목</th>
-                <th colspan="6">${data.title}</th>
+                <th colspan="6" id="elTitle">${data.title}</th>
             </tr>
             <tr class="boardInfo">
                 <th id="nm">작성자</th>
@@ -71,11 +76,11 @@ button {
                 </td>
             </tr>
         </table>
-        <div class="ctnt">
+        <div class="ctnt" id="elCtnt">
             ${data.ctnt }
         </div>
         <div class="btn">
-             	<a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}">목록</a>
+             	<a href="/board/list?page=${param.page}&record_cnt=${param.record_cnt}&searchText=${param.searchText}&searchType=${param.searchType}">목록</a>
              <c:if test="${loginUser.i_user == data.i_user }">
                 <a href="/board/regmod?i_board=${data.i_board}">
                    <button type="submit">수정</button>
@@ -102,6 +107,7 @@ button {
            <table>
               <tr>
                  <th>내용</th>
+                 <th></th>
                  <th>글쓴이</th>
                  <th>등록일</th>
                  <th>비고</th>
@@ -163,7 +169,39 @@ button {
     function submitDel() {
         delFrm.submit()
     }
-
+    
+    function doHighlight() {
+    	var searchText = '${param.searchText}'
+    	var searchType = '${param.searchType}'
+    	
+    	switch(searchType) {
+    	case 'a': //제목
+    	//자바스크립트에서 replaceAll은 없다.
+ 
+    		var txt = elTitle.innerText
+    		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+    		elTitle.innerHTML = txt
+    		break
+    	case 'b': //내용
+    		var txt = elCtnt.innerText
+    		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+    		elCtnt.innerHTML = txt
+    		
+    		break
+    	case 'c': //제목+내용
+    		var txt = elTitle.innerText
+    		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+    		elTitle.innerHTML = txt
+    		
+    		txt = elCtnt.innerText
+    		txt = txt.replace(new RegExp('${searchText}'), '<span class="highlight">' + searchText + '</span>')
+    		elCtnt.innerHTML = txt
+    		break
+    	}
+    }
+    
+    doHighlight()
+    
 	</script>
 </body>
 </html>

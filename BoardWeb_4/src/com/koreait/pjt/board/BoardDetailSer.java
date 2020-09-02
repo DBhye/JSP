@@ -48,10 +48,8 @@ public class BoardDetailSer extends HttpServlet {
 		param.setI_board(i_board);
 		// 로그인한 유저의 pk값(i_user를) 받아와서 'read_10' 키값으로 저장
 		//단독으로 조회수 올리기 방지 --- [end]
-		
-		
-		
-		
+
+				
 		request.setAttribute("data", BoardDAO.selBoard(param));
 		
 		request.setAttribute("cmtList", BoardCmtDAO.selCmtList(i_board));
