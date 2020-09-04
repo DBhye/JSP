@@ -1,7 +1,7 @@
 package com.koreait.pjt.vo;
 
 public class BoardDomain extends BoardVO {
-	private String nm;
+
 	private int yn_like;
 	private int record_cnt; //페이지당 나오는 레코드 수 (글 수)
 	private int sIdx;
@@ -93,11 +93,5 @@ public class BoardDomain extends BoardVO {
 		this.yn_like = yn_like;
 	}
 
-	public String getNm() {
-		return nm;
-	}
 
-	public void setNm(String nm) {
-		this.nm = nm;
-	}
 }
