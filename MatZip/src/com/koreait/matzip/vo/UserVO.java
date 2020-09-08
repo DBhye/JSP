@@ -6,9 +6,10 @@ public class UserVO {
 	private String user_pw;
 	private String nm;
 	private String salt;
-	private String progile_img;
+	private String profile_img;
 	private String r_dt;
 	private String m_dt;
+	
 	public int getI_user() {
 		return i_user;
 	}
@@ -39,11 +40,11 @@ public class UserVO {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	public String getProgile_img() {
-		return progile_img;
+	public String getProfile_img() {
+		return profile_img;
 	}
-	public void setProgile_img(String progile_img) {
-		this.progile_img = progile_img;
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
 	}
 	public String getR_dt() {
 		return r_dt;

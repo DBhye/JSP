@@ -1,5 +1,4 @@
-  
-package com.koreait.pjt.db;
+package com.koreait.matzip.db;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

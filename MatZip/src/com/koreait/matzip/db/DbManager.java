@@ -1,17 +1,15 @@
 package com.koreait.matzip.db;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DbManager {
-	public static void main(String[] args) {
-		try {
-			getCon();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 	public static Connection getCon() throws Exception {
-		String url = "jdbc:mysql://127.0.1:3306/matzip";
+		String url = "jdbc:mysql://127.0.0.1:3306/matzip";
 		String user = "root";
 		String pw = "koreait2020";
 		String className = "com.mysql.cj.jdbc.Driver";
@@ -19,6 +17,16 @@ public class DbManager {
 		Class.forName(className);
 		Connection con = DriverManager.getConnection(url, user, pw);
 		System.out.println("DB 연결 완료!");
-		return null;
+		return con;
+	}
+	
+	public static void close(Connection con, PreparedStatement ps) {
+		close(con, ps, null);
+	}
+	
+	public static void close(Connection con, PreparedStatement ps, ResultSet rs) {
+		if(rs != null) { try { rs.close(); } catch (SQLException e) { e.printStackTrace();} }
+		if(ps != null) { try { ps.close(); } catch (SQLException e) { e.printStackTrace();} }
+		if(con != null) { try { con.close(); } catch (SQLException e) { e.printStackTrace();} }
 	}
 }
