@@ -16,7 +16,7 @@ a {
 	text-decoration: none;
 }
 
-.ml5 { margin-left: 5px; }
+.ml5 { margin-left: 5px; color:#d4aab3;}
 .ml10 { margin-left: 10px; }
 .ml15 { margin-left: 15px; }
 
@@ -28,7 +28,7 @@ a {
 }
 
 #container > header {	
-	background-color: #a29bfe;
+	background-color: #621940;
 	display: flex;
 	height: 70px;
 	padding: 10px;
@@ -41,7 +41,7 @@ a {
 }
 
 #container > header > #headerLeft > #headerLogout > a {
-	color: blue;
+	color: #f67e7d;
 }
 
 #container > header > #headerRight {
@@ -55,6 +55,7 @@ a {
 #container > header > #headerRight > a {
 	font-weight: bold;
 	font-size: 1.4em;
+	color:#ffb997;
 }
 
 #container > section {
