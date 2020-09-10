@@ -21,10 +21,11 @@
 	<script>
 	function chkId() {
 		const user_id = frm.user_id.value
-		
-		axios.get('/user/ajaxIdChk', {
+		/*ajax통신 : refresh 없이 필요한 값만 가져와서 바꾸는것*/
+		axios.get('/user/ajaxIdChk', { /*axios : ajax 통신 중에 하나*/
 			params: {
-				user_id
+				'user_id' : user_id //user_id만 적어도 실행된다. 변수명과 키값이 같으므로!!
+				/*'키값' : 밸류*/
 			}
 		}).then(function (res) {
 			console.log(res)
