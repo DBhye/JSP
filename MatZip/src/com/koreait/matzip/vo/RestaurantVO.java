@@ -1,4 +1,4 @@
-package com.koreait.matzip.restaurant;
+package com.koreait.matzip.vo;
 
 public class RestaurantVO {
 	private int i_rest;
@@ -7,34 +7,8 @@ public class RestaurantVO {
 	private double lat;
 	private double lng;
 	private int cd_category;
-	private String r_dt;
-	private String m_dt;
 	private int i_user;
 	
-	public int getI_user() {
-		return i_user;
-	}
-	public void setI_user(int i_user) {
-		this.i_user = i_user;
-	}
-	public String getR_dt() {
-		return r_dt;
-	}
-	public void setR_dt(String r_dt) {
-		this.r_dt = r_dt;
-	}
-	public String getM_dt() {
-		return m_dt;
-	}
-	public void setM_dt(String m_dt) {
-		this.m_dt = m_dt;
-	}
-	public String getAddr() {
-		return addr;
-	}
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
 	
 	public int getI_rest() {
 		return i_rest;
@@ -48,7 +22,12 @@ public class RestaurantVO {
 	public void setNm(String nm) {
 		this.nm = nm;
 	}
-	
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
 	public double getLat() {
 		return lat;
 	}
@@ -67,6 +46,13 @@ public class RestaurantVO {
 	public void setCd_category(int cd_category) {
 		this.cd_category = cd_category;
 	}
-
+	public int getI_user() {
+		return i_user;
+	}
+	public void setI_user(int i_user) {
+		this.i_user = i_user;
+	}
+	
+	
 }
 

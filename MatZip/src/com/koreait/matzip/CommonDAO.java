@@ -11,7 +11,7 @@ import com.koreait.matzip.db.JdbcTemplate;
 import com.koreait.matzip.vo.CodeDomain;
 
 public class CommonDAO {
-	public static List<CodeDomain> selCodeList(int i_m) {
+	public static List<CodeDomain> selCodeList(final int i_m) {
 		List<CodeDomain> list = new ArrayList();
 		//제네릭
 		

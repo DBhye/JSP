@@ -1,10 +1,8 @@
-  
 package com.koreait.matzip.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 
 public class JdbcTemplate {	
 	//select용
