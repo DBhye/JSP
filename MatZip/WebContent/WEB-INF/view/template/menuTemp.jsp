@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>${title}</title>
 <link rel="stylesheet" type="text/css" href="/res/css/common.css">
+	<c:forEach items="${css}" var ="item">
+		<link rel="stylesheet" type="text/css" href="/res/css/${item}.css">
+	</c:forEach>
 </head>
 <body>
 	<div id="container">
@@ -26,6 +29,7 @@
 				<div class="ml15" id="headerLogout"><a href="/user/logout">로그아웃</a></div>			
 			</div>
 			<div id="headerRight">
+				<a href="/restaurant/restMap">지도</a>
 				<a class="ml15" href="/restaurant/restReg">등록</a>
 				<a class="ml15" href="/user/restFavorite"> 찜</a>
 			</div>
