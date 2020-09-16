@@ -8,8 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.annotation.MultipartConfig;
 @WebServlet("/")
+@MultipartConfig(
+		fileSizeThreshold = 10_485_760, //10MB
+		maxFileSize = 52_428_800, //50mb
+		maxRequestSize = 104_857_600 // 100mb
+		)
 public class Container extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

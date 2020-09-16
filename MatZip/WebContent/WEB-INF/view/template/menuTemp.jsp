@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>${title}</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/res/css/common.css">
-	<c:forEach items="${css}" var ="item">
-		<link rel="stylesheet" type="text/css" href="/res/css/${item}.css">
-	</c:forEach>
+<c:forEach items="${css}" var="item">
+	<link rel="stylesheet" type="text/css" href="/res/css/${item}.css">
+</c:forEach>
 </head>
 <body>
 	<div id="container">
@@ -31,7 +32,7 @@
 			<div id="headerRight">
 				<a href="/restaurant/restMap">지도</a>
 				<a class="ml15" href="/restaurant/restReg">등록</a>
-				<a class="ml15" href="/user/restFavorite"> 찜</a>
+				<a class="ml15" href="/user/restFavorite">찜</a>
 			</div>
 		</header>
 		<section>
